@@ -29,6 +29,6 @@ int main()
     
     server->listen(ip, port);
     server->start();
-	//TSETYONG
+	//over
     return 0;
 }
