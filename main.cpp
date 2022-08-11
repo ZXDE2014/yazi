@@ -29,6 +29,5 @@ int main()
     
     server->listen(ip, port);
     server->start();
-	//over
     return 0;
 }
