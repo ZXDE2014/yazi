@@ -1,5 +1,5 @@
 #pragma once
-
+//任务分发器
 #include <pthread.h>
 #include <signal.h>
 #include <list>

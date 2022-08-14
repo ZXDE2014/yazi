@@ -1,5 +1,5 @@
 #pragma once
-
+//解析 main.ini
 #include <string.h>
 #include <string>
 #include <map>

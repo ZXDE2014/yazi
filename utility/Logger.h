@@ -1,5 +1,5 @@
 #pragma once
-
+//日志文件
 #include <time.h>
 #include <stdarg.h>
 #include <stdio.h>

@@ -1,6 +1,6 @@
 #pragma once
 #include <list>
-
+//内存管理
 #include "Mutex.h"
 #include "AutoLock.h"
 

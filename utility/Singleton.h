@@ -1,5 +1,5 @@
 #pragma once
-
+//模版类：实例仓库
 namespace yazi {
 namespace utility {
 
