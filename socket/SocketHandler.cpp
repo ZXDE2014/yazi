@@ -36,6 +36,7 @@ SocketHandler::~SocketHandler()
 
 void SocketHandler::listen(const string & ip, int port)
 {
+    //complete socket，bind，listen 
     m_server = new ServerSocket(ip, port);
 }
 
@@ -62,6 +63,8 @@ void SocketHandler::handle(int max_connections, int wait_time)
     m_epoll = new EventPoller(false);
     m_epoll->create(max_connections);
     m_epoll->add(m_server->m_sockfd, m_server, (EPOLLIN | EPOLLHUP | EPOLLERR));
+    
+    //problems: nums_of_conns == nums_of_threads
     m_sockpool.init(max_connections);
 
     debug("epoll wait time: %dms", wait_time);
@@ -77,6 +80,7 @@ void SocketHandler::handle(int max_connections, int wait_time)
         {
             if (m_server == static_cast<Socket *>(m_epoll->m_events[i].data.ptr))
             {
+                //connection has connected.
                 debug("socket accept event");
                 int soctfd = m_server->accept();
                 Socket * socket = m_sockpool.allocate();
@@ -87,10 +91,12 @@ void SocketHandler::handle(int max_connections, int wait_time)
                 }
                 socket->m_sockfd = soctfd;
                 socket->set_non_blocking();
+                //attach new connection
                 attach(socket);
             }
             else
             {
+                //TCP byte stream has received.
                 Socket * socket = static_cast<Socket *>(m_epoll->m_events[i].data.ptr);
                 if (m_epoll->m_events[i].events & EPOLLHUP)
                 {
