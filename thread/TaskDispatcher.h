@@ -24,6 +24,7 @@ public:
 
 protected:
     std::list<Task *> m_tasks;
+    //by list,complete task quque <FIFO>
 };
 
 }}

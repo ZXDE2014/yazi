@@ -17,6 +17,7 @@ namespace socket {
 
 class Socket
 {
+    //friend class :: better for acquiring private element
     friend class SocketHandler;
 
 public:

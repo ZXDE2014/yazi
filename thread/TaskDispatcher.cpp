@@ -15,6 +15,7 @@ TaskDispatcher::~TaskDispatcher()
 
 void TaskDispatcher::init(int threads)
 {
+    //create an ThreadPool instance. nums of thread is threads(64 in conf/)
     Singleton<ThreadPool>::instance()->create(threads);
     start();
 }
@@ -55,6 +56,7 @@ void TaskDispatcher::run()
     }
     if (0 != pthread_sigmask(SIG_SETMASK, &mask, NULL))
     {
+        //set all sig block :not accept all sig.
         error("thread manager pthread_sigmask failed!");
         return;
     }
@@ -63,6 +65,7 @@ void TaskDispatcher::run()
         //debug("task list: %d", m_actions.size());
         m_mutex.lock();
         while (m_tasks.empty())
+        // if no task,block here
             m_cond.wait(&m_mutex);
         Task* task = m_tasks.front();
         m_tasks.pop_front();

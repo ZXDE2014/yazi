@@ -64,7 +64,7 @@ void SocketHandler::handle(int max_connections, int wait_time)
     m_epoll->create(max_connections);
     m_epoll->add(m_server->m_sockfd, m_server, (EPOLLIN | EPOLLHUP | EPOLLERR));
     
-    //problems: nums_of_conns == nums_of_threads
+    //problems: nums_of_conns == nums_of_SockObject <unnecessary>
     m_sockpool.init(max_connections);
 
     debug("epoll wait time: %dms", wait_time);
@@ -114,6 +114,8 @@ void SocketHandler::handle(int max_connections, int wait_time)
                 {
                     debug("socket read event");
                     detach(socket);
+                    // listen socket changed: put socket to a task
+                    // default task is yazi/task/WorkTask.h
                     Task * task = TaskFactory::create(socket);
                     Singleton<TaskDispatcher>::instance()->assign(task);
                 }

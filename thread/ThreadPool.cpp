@@ -84,7 +84,8 @@ void ThreadPool::assign(Task *task)
         return;
     }
     debug("assign a new task: %x to thread pool", task);
-
+    
+    // get a idle thread, give a task to it
     Thread* thread = get_idle_thread();
     if (thread != NULL)
     {
